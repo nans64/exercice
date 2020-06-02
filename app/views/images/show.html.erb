@@ -1,0 +1,22 @@
+<div class="container">
+<%= image_tag("data:image/#{@image.extension};base64,#{@image.stream}")%>
+
+<h3> Add commment</h3>
+  <div class="m-5 p-5">
+    <%= form_tag image_comments_path(@image),   multipart: true do %>
+      <%= text_area_tag :description, '',  placeholder: "Your comment" %>
+      <%=  submit_tag "Add comment", class: "btn btn-info" %>
+    <% end %>
+  </div>
+  <div>
+  <% @comments.each do |comment|%>
+  <p><%= comment.description%> | <%= comment.user.username%>
+  <%if comment.user == current_user %>
+    <%=link_to 'Delete', image_comment_path(@image, comment),data: {confirm: "Are you sure  ?"},  class:"btn btn-danger", method: :delete%>
+     <%=link_to 'Edit', edit_image_comment_path(@image, comment), class:"btn btn-warning", method: :get%>
+  <%end%>
+  </p>
+
+  <% end %>
+  </div>
+</div>

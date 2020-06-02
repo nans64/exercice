@@ -1,0 +1,33 @@
+
+<div class="container">
+  <div class="p-5 m-5 card">
+    <h3>Ajoutez des images </h3>
+    <%= form_tag images_path, class:"row",  multipart: true do %>
+      <%= file_field_tag :stream, class:"col-md-3" %>
+      <label class="category-select">
+      <%= check_box_tag :private, label:"private", class:"col-md-3" %>
+      private
+    </label>
+      
+      <%= text_field_tag :description, '',  placeholder: "description", class:"col-md-3" %>
+      <%=  submit_tag "Ajouter", class: "col-md-3 btn btn-info" %>
+    <% end %>
+  </div>
+  <div class="row">
+    <% if @images != nil && @images != "" %>
+    <% @images.each do |image| %>
+      
+      <% if image.user != current_user && image.private == true%>
+      <%else%>
+        <div class="col-md-3 card">
+        <%= link_to image_tag("data:image/#{image.extension};base64,#{image.stream}", class:"flexible"), image_path(image) %>
+          <div class="card-body">
+            <p class="card-text"><%=image.description%></p>
+          </div>
+        </div>
+      <%end%>
+
+    <% end %>
+    <%end%>
+  </div>
+</div>

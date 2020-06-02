@@ -1,0 +1,18 @@
+<h3>Ajoutez des images </h3>
+<%= form_tag pictures_path, multipart: true do %>
+  <%= file_field_tag :pictures %>
+  <%= submit_tag "Ajouter" %>
+<% end %>
+
+<h3>Mes images</h3>
+
+<% @users.each do |user|%>
+  <%if user.pictures.attached?%>
+    <% user.pictures.each do |picture| %>
+      <%= image_tag(picture) %>
+    <% end %>
+  <%else%>
+    <p>=== Il n'y a pas encore d'image lié à cet utilisateur ===</p>
+  <%end%>
+<%end%>
+
